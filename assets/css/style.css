@@ -16,6 +16,7 @@ ul {
 }
 .moon {
   color: #333333 !important;
+  text-decoration: none;
 }
 .moon-muted {
   color: #666666 !important;
@@ -108,7 +109,7 @@ ul {
   transition: width 0.3s ease;
 }
 
-.nav-link-custom:hover::after {
+.nav-link-custom:hover::after, .nav-link-custom.active::after {
   width: 100%;
 }
 
@@ -131,3 +132,107 @@ ul {
     display: inline;
 }
 /* INLINE END */
+
+/* Wrapper tabs */
+.resume-tabs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.resume-tabs li {
+    display: inline-block;
+}
+
+/* Link tab */
+.resume-tab-link {
+    font-size: 1.1rem;
+    color: #9f9f9f;
+    text-decoration: none;
+    padding-bottom: .4rem;
+    position: relative;
+    transition: color .3s ease;
+}
+
+.resume-tab-link .tab-number {
+    margin-right: .5rem;
+    font-weight: 400;
+}
+
+/* Hover */
+.resume-tab-link:hover {
+    color: #000;
+}
+
+/* Active state */
+.resume-tab-link.active {
+    color: #000;
+    font-weight: 600;
+}
+
+/* Underline animation */
+.resume-tab-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background: #000;
+    transition: width .3s ease;
+}
+
+.resume-tab-link.active::after {
+    width: 100%;
+}
+
+/* Hide ALL tab content by default */
+.tab-pane {
+    display: none;
+}
+
+/* Show only active */
+.tab-pane.active.show {
+    display: block;
+    animation: fadeIn .3s ease;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+
+
+/* card proyek-sertifikat START */
+.portfolio-card {
+    transition: 0.3s ease;
+}
+
+.portfolio-card:hover {
+    transform: translateY(-5px);
+}
+
+.portfolio-img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 15px;
+    transition: 0.3s ease;
+}
+
+.portfolio-card:hover .portfolio-img {
+    transform: scale(1.03);
+}
+
+.portfolio-card h4 {
+    font-weight: 500;
+    font-size: 1.4rem;
+}
+
+.moon-muted {
+    color: #777;
+    font-size: 0.95rem;
+}
+
+/* card proyek-sertifikat END */
