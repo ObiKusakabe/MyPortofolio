@@ -205,9 +205,10 @@ ul {
     border-radius: 15px;
     transition: 0.3s ease;
 }
-.portfolio-card:hover .portfolio-img {
+.portfolio-card:hover .portfolio-img  {
     /* transform: scale(1.03); */
     box-shadow: 0 10px 25px rgba(0,0,0,0.22) !important;
+    
 }
 .portfolio-card h4 {
     font-weight: 500;
@@ -232,6 +233,67 @@ ul {
     background: #e5e5e5;
 }
 /* END tech tag */
+
+/* START */
+.portfolio-card .accordion-button {
+    background: #fafafa;
+    font-weight: 500;
+    border-radius: 8px;
+}
+.portfolio-card .accordion-button:not(.collapsed) {
+    
+}
+.portfolio-card .accordion-item {
+    border: none;
+    margin-bottom: 8px;
+}
+/* HAPUS background default collapse */
+.accordion-button {
+    position: relative;
+    padding-left: 2rem; /* beri ruang untuk garis */
+    box-shadow: none !important;
+    color: #333333;
+}
+
+/* Garis vertikal */
+.accordion-button::before {
+    content: "";
+    position: absolute;
+    left: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%) scaleY(0);
+    width: 3px;
+    height: 70%;         /* panjang garis */
+    background-color: #333333;
+    transform-origin: bottom; 
+    transition: transform 0.3s ease;
+    border-radius: 2px;
+    
+}
+
+/* Saat hover */
+.accordion-button:hover::before {
+    transform: translateY(-50%) scaleY(1);
+}
+
+/* Saat accordion sedang terbuka */
+.accordion-button:not(.collapsed)::before {
+    transform: translateY(-50%) scaleY(1);
+    
+}
+
+/* Hilangkan icon panah biru Bootstrap */
+/* .accordion-button::before {
+    display: none;
+} */
+
+/* Tambahkan panah custom */
+/* .accordion-button.collapsed::after-icon {
+    content: "▼"; /* bisa pake SVG nanti */
+/* } */ 
+
+/* END */
+
 
 /* {
   outline: 1px solid red;
