@@ -10,5 +10,3 @@ var typed = new Typed("#typed", {
   backDelay: 1300,
   loop: true,
 });
-
-
