@@ -248,15 +248,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- CARD 5 -->
-                                    <div class="col-12 col-sm-6">
-                                        <div class="portfolio-card">
-                                            <img src="assets/img/Seminar - Sistem Pemerintahan berbasiis Elektronik.jpg" class="portfolio-img shadow" alt="Seminar">
-                                            <h4 class="mt-4 moonh1">Seminar - Sistem Pemerintahan berbasis Elektronik di Kab.Bandung</h4>
-                                            <p class="moon-muted">Sekda Kabupaten Sumedang</p>
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
 
@@ -475,6 +466,146 @@
   <img src="" alt="Preview">
 </div>
 
+<div id="chatBtn">
+  💬
+</div>
+<!-- Chat Modal -->
+<div class="modal fade" id="chatModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Chatbot Gemini</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body" style="height: 350px; overflow-y: auto;">
+        <div id="chatBox"></div>
+      </div>
+
+      <div class="modal-footer">
+        <input id="chatInput" type="text" class="form-control" placeholder="Ketik pesan...">
+        <button id="sendBtn" class="btn btn-dark">Kirim</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script type="module">
+    // START Chatbot
+import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+
+const context = `
+Kamu adalah chatbot di portfolio pribadi Roby Rachmat Firdaus.
+
+Berikut konteks tentang Roby:
+- Nama lengkap: Roby Rachmat Firdaus
+- Panggilan: Roby
+- Seorang mahasiswa Teknik Informatika di Institut Digital Ekonomi LPKIA Bandung
+- Alumni SMK Mahardhika Batujajar, jurusan RPL
+- Berpengalaman magang di BBPMP Jawa Barat
+- Minat: desain UI/UX, pengembangan web, optimasi performa PC, produktivitas digital
+- Suka membuat solusi digital yang mempermudah UMKM
+- Orangnya ramah, humble, informatif, dan sering menjelaskan dengan analogi yang mudah dipahami
+
+Tugas kamu:
+- Menjawab setiap pertanyaan pengunjung website dengan sopan
+- Menjelaskan tentang portfolio Roby
+- Membantu memberi informasi pengalaman, proyek, sertifikat, dan kontak Roby
+- Jangan mengada-ada hal yang tidak ada di portfolio
+- Jawab dengan gaya santai, jelas, dan profesional
+- Jawabnya 2-3 paragraf, karena ini bukan di platform gemini nya langsung jadi suka kurang rapih
+- kalau mau bold dikurng pake ini teksnya <b>contoh teks</b>
+- Jawab lah dengan to the point 1 sampai 2 kalimat
+- Roby belongs to Cindy, klo ada yang nanya roby punya kekasih ga? jawab ada namanya Cindy <3
+- langsung jawab tanpa sapa biar ga keliatan klo ai ini ga support fitur memori ingatan chat sebelumnya
+- tanya alamat? kasih ini
+- roby suka main Fisch (game mancing) di Roblox
+- alamat roby di Batujajar Bandung Barat
+`;
+
+
+const genAI = new GoogleGenerativeAI("AIzaSyC1Yg-KN5tuB7yhf_rdYZCWMxW9lva735s");
+const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+
+const chatBtn = document.getElementById("chatBtn");
+const chatModal = new bootstrap.Modal(document.getElementById("chatModal"));
+const chatBox = document.getElementById("chatBox");
+const chatInput = document.getElementById("chatInput");
+const sendBtn = document.getElementById("sendBtn");
+
+chatBtn.addEventListener("click", () => {
+  chatModal.show();
+});
+chatBox.innerHTML += `
+      <div class="p-2 mb-2 bg-dark text-white rounded">
+        <b>AI:</b> Halo Saya AI Assistant Roby, mau tanya apa? siapa tau aku bisa bantu :)
+      </div>`;
+async function sendMessage() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+
+  // Tampilkan pesan user
+  chatBox.innerHTML += `
+    <div class="p-2 mb-2 ps-auto bg-light border border-1 text-end rounded">
+      <b>You:</b> ${text}
+    </div>`;
+
+  chatInput.value = "";
+
+  // Disable input saat AI memproses
+  chatInput.disabled = true;
+  sendBtn.disabled = true;
+  sendBtn.innerText = "Menunggu...";
+
+  // Tampilkan indikator mengetik
+  const typingDiv = document.createElement("div");
+  typingDiv.id = "typing";
+  typingDiv.className = "p-2 mb-2 bg-dark text-white rounded";
+  typingDiv.innerHTML = "<b>AI:</b> ...";
+  chatBox.appendChild(typingDiv);
+
+  try {
+    const result = await model.generateContent([
+        // {role: "system", parts: [{ text: context }] },
+        // {role: "user", parts: [{ text }] }
+        `${context} ${text}`
+    ]);
+    const reply = result.response.text();
+
+    // Hapus indikator typing
+    typingDiv.remove();
+
+    // Tampilkan jawaban AI
+    chatBox.innerHTML += `
+      <div class="p-2 mb-2 bg-dark text-white rounded">
+        <b>AI:</b> ${reply}
+      </div>`;
+  } catch (err) {
+    typingDiv.remove();
+    chatBox.innerHTML += `
+      <div class="p-2 mb-2 bg-danger text-white rounded">
+        <b>Error:</b> ${err.message}
+      </div>`;
+  }
+
+  // Re-enable input
+  chatInput.disabled = false;
+  sendBtn.disabled = false;
+  sendBtn.innerText = "Kirim";
+
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+sendBtn.addEventListener("click", sendMessage);
+
+chatInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") sendMessage();
+});
+// END Chatbot
+
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
@@ -482,12 +613,11 @@
     once: true
   });
 </script>
-<script src="assets/js/mdbootstrap-chatfloat.js"></script>
+<!-- <script src="assets/js/mdbootstrap-chatfloat.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 <script src="assets/js/typed.js"></script>
 <script src="assets/js/script.js"></script>
 
 
 </body>
-
 </html>

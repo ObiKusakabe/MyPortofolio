@@ -319,9 +319,30 @@ ul {
   transform: scale(1);
 }
 /* Cursor pointer untuk gambar portfolio */
-.portfolio-img {
+/* .portfolio-img {
   
+} */
+
+
+/* START Float chat bot */
+#chatBtn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 60px;
+  height: 60px;
+  background: #000;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  z-index: 9999;
+  font-size: 24px;
 }
+/* END Float chat bot */
 
 /* END Portfolio image preview */
 /* * {
